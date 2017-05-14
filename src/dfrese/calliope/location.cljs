@@ -1,5 +1,6 @@
 (ns dfrese.calliope.location
   (:require [dfrese.calliope.core :as core]
+            [dfrese.calliope.ext :as ext]
             [dfrese.calliope.browser :as browser]))
 
 (defn- location-hash
@@ -11,9 +12,9 @@
     hash))
 
 (defrecord ^:no-doc GetHashCmd [window]
-  core/ICmd
+  ext/ICmd
   (-run! [this context]
-    (core/dispatch! context (location-hash window))))
+    (ext/dispatch! context (location-hash window))))
 
 (defn get-location-hash
   "Returns a command that sends the current location hash."
@@ -32,7 +33,7 @@
               location-hash))
 
 (defrecord ^:no-doc SetHashCmd [window hash]
-  core/ICmd
+  ext/ICmd
   (-run! [this context]
     (set! (.-hash (.-location window))
           hash)))

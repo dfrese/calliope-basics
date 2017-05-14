@@ -1,18 +1,19 @@
 (ns dfrese.calliope.storage
-  (:require [dfrese.calliope.core :as core]))
+  (:require [dfrese.calliope.core :as core]
+            [dfrese.calliope.ext :as ext]))
 
 (defrecord StorageGetCmd [which key]
-  core/ICmd
+  ext/ICmd
   (-run! [this context]
-    (core/dispatch! context (.getItem which key))))
+    (ext/dispatch! context (.getItem which key))))
 
 (defrecord StorageSetCmd [which key value]
-  core/ICmd
+  ext/ICmd
   (-run! [this context]
     (.setItem which key value)))
 
 (defrecord StorageRemoveCmd [which key]
-  core/ICmd
+  ext/ICmd
   (-run! [this context]
     (.removeItem which key)))
 

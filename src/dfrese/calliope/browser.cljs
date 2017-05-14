@@ -1,11 +1,12 @@
 (ns dfrese.calliope.browser
-  (:require [dfrese.calliope.core :as core]))
+  (:require [dfrese.calliope.core :as core]
+            [dfrese.calliope.ext :as ext]))
 
 ;; commands that search for elements? (elementById, querySelector?)
 
 (defrecord ^:no-doc Focus
   [document id]
-  core/ICmd
+  ext/ICmd
   (-run! [this context]
     (when-let [node (.getElementById document id)]
       (.focus node))))
@@ -26,10 +27,10 @@
 
 (defrecord ^:no-doc EventListenerSub
   [^js/EventTarget target event-name use-capture?]
-  core/ISub
+  ext/ISub
   (-subscribe! [this context]
     (let [f (fn [e]
-              (core/dispatch! context e))]
+              (ext/dispatch! context e))]
       (.addEventListener target event-name f use-capture?)
       f))
   (-unsubscribe! [this f]
